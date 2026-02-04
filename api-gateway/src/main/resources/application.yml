@@ -1,0 +1,55 @@
+server:
+    port: 8090
+
+#spring:
+#  application:
+#      name: api-gateway
+#  cloud:
+#    gateway:
+#        routes:
+#            - id: account-service
+#              uri: http://localhost:8081
+#              predicates:
+#                  - Path=/accounts/**
+#            - id: loan-service
+#              uri: http://localhost:8082
+#              predicates:
+#                  - Path=/loans/**
+#            - id: card-service
+#              uri: http://localhost:8083
+#              predicates:
+#                  - Path=/cards/**
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/accounts/**
+        - id: loan-service
+          uri: lb://loan-service
+          predicates:
+            - Path=/loans/**
+        - id: card-service
+          uri: lb://card-service
+          predicates:
+            - Path=/cards/**
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761
+    initial-instance-info-replication-interval-seconds: 10
+    register-with-eureka: true
+    fetch-registry: true
+
+
+
+
+
+
